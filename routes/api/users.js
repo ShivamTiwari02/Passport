@@ -60,7 +60,7 @@ router.post('/login', auth.optional, (req, res, next) => {
     if(passportUser) {
       const user = passportUser;
       user.token = passportUser.generateJWT();
-
+      console.log(req.headers);
       return res.json({ user: user.toAuthJSON() });
     }
 
@@ -80,6 +80,14 @@ router.get('/current', auth.required, (req, res, next) => {
 
       return res.json({ user: user.toAuthJSON() });
     });
+});
+
+router.get("/logout", (req, res) => {
+  // req.logout();
+  console.log(req.user.authorization);
+  // req.user.token = null;
+  res.send("Logged Out");
+  // res.redirect("/");
 });
 
 module.exports = router;
